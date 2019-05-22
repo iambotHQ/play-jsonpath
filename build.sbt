@@ -15,7 +15,7 @@ resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
 libraryDependencies ++= Seq(
 	"com.typesafe.play" %% "play-json" % "[2.7.0,2.7.+)",
 	"io.gatling" %% "jsonpath" % "0.6.14",
-  "org.scalatest" %% "scalatest" % "2.2.6" % "test"
+  "org.scalatest" %% "scalatest" % "3.0.5" % "test"
 )
 
 publishMavenStyle := true

@@ -47,7 +47,7 @@ class JSONPathSpec extends WordSpec with Matchers {
     }
 
     "recursive array slices" ignore {
-      println(JSONPath.query("$..address[1]", json))
+      JSONPath.query("$..tag[1]", json) shouldEqual(JsArray(Seq(JsString("t2"), JsString("t5"), JsString("t8"))))
     }
 
     "array random" in {
@@ -82,13 +82,6 @@ class JSONPathSpec extends WordSpec with Matchers {
       JSONPath.query("$.address[?(@.id == 4 || @.state == 'NJ')]", json).as[JsArray].value.size shouldEqual(1)
     }
 
-    "print tokens" in {
-      val jsonPath = "$..book[0][1]"
-      val tokens = new Parser().compile(jsonPath).get
-      println(tokens.mkString("\n"))
-
-      tokens.isEmpty shouldEqual false
-    }
   }
 
   lazy val ids = Seq(1,2,3,4)
@@ -105,20 +98,23 @@ class JSONPathSpec extends WordSpec with Matchers {
       |   "id": 2,
       |   "street": "123 Main St.",
       |   "city": "Springfield",
-      |   "state": "PA"
+      |   "state": "PA",
+      |   "tag": ["t1", "t2", "t3"]
       | },
       | {
       |   "id": 3,
       |   "street": "456 Main St.",
       |   "city": "Devon",
       |   "state": "PA",
-      |   "work": true
+      |   "work": true,
+      |   "tag": ["t4", "t5", "t6"]
       | },
       | {
       |   "id": 4,
       |   "street": "789 Main St.",
       |   "city": "Sea Isle City",
-      |   "state": "NJ"
+      |   "state": "NJ",
+      |   "tag": ["t7", "t8", "t9"]
       | }
       | ]
       |}

@@ -31,22 +31,16 @@ object JSONPath {
     case RecursiveField(name) => js match {
       case JsObject(fields) => {
         var value = js \\ name
-        if(value.head.isInstanceOf[JsArray]){
-          value = value.flatMap(_.as[JsArray].value)
-        }
         JsArray(value)
       }
       case JsArray(arr) => {
         var value = arr.flatMap(_ \\ name)
-        if(value.head.isInstanceOf[JsArray]){
-          value = value.flatMap(_.as[JsArray].value)
-        }
         JsArray(value)
       }
       case _ => error()
     }
     case MultiField(names) => js match {
-      case JsObject(fields) => JsArray(fields.filter(f => names.contains(f._1)).map(_._2).toSeq)
+      case JsObject(fields) => JsArray(fields.filter(f => names.contains(f._1)).map(_._2).toSeq.reverse)
       case _ => error()
     }
     case AnyField => js match {
@@ -68,7 +62,6 @@ object JSONPath {
     case ArrayRandomAccess(indices) => {
       val arr = js.as[JsArray].value
       val selectedIndices = indices.map(i => if(i >= 0) i else arr.size + i).toSet.toSeq
-//      println(selectedIndices + " " + js)
 
       if(selectedIndices.size == 1) arr(selectedIndices.head) else JsArray(selectedIndices.map(arr(_)))
     }
