@@ -22,17 +22,6 @@ publishMavenStyle := true
 
 publishArtifact in Test := false
 
-pgpPublicRing := file("/home/jconley/.gnupg/pubring.gpg")
-pgpSecretRing := file("/home/jconley/.gnupg/secring.gpg")
-
-publishTo := {
-  val nexus = "https://oss.sonatype.org/"
-  if (isSnapshot.value)
-    Some("snapshots" at nexus + "content/repositories/snapshots")
-  else
-    Some("releases"  at nexus + "service/local/staging/deploy/maven2")
-}
-
 licenses := Seq("MIT" -> url("http://opensource.org/licenses/MIT"))
 
 homepage := Some(url("https://github.com/josephpconley/play-jsonpath"))
